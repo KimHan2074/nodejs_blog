@@ -1,0 +1,7 @@
+@use 'variable';
+
+h1 {
+    color: variable.$red-color;
+};
+
+// Khi chạy phải vừa chạy "npm start" và "npm run watch" để css được đồng bộ hóa
