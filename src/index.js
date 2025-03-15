@@ -5,9 +5,17 @@ const handlebars = require("express-handlebars");
 const app = express();
 const port = 3000;
 
+const route = require('./routes');
+
 app.use(express.static(path.join(__dirname, 'public'))); /*static file*/
 
 app.use(morgan('combined')) ;
+app.use(express.urlencoded({
+  extended:true
+}
+)); /*middleware xử lý dữ liệu từ form submit lên cho server*/
+app.use(express.json()); /*middleware xử lý dữ liệu từ client gửi lên cho server*/
+
 
 // Template engine
 app.engine('hbs',handlebars.engine({
@@ -17,15 +25,10 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resource\\views'));
 // console.log("Path: ", path.join(__dirname, 'resource\\views'));
 
-// route
-app.get('/', (req, res) => {
-  res.render('home');
-})
+// write route
+route(app);
 
-app.get('/news', (req, res) => {
-  res.render('news');
-})
-// 127.0.0.1 (địa chỉ IP => localhost)
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 })
+
